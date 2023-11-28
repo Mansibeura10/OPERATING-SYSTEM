@@ -1,0 +1,53 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+int abs_diff(int a, int b) {
+    return abs(a - b);
+}
+
+int findClosestTrack(int tracks[], bool visited[], int head, int n) {
+    int min = INT_MAX, index;
+    int i;
+    for (i= 0; i < n; i++) {
+        if (!visited[i] && abs_diff(head, tracks[i]) < min) {
+            min = abs_diff(head, tracks[i]);
+            index = i;
+        }
+    }
+    return index;
+}
+
+int main() {
+    int tracks[20];
+    bool visited[20] = {false};
+    int n, head, i;
+    float avg_head_movement = 0;
+
+    printf("Enter the number of tracks: ");
+    scanf("%d", &n);
+
+    printf("Enter the track positions: ");
+    for (i = 0; i < n; i++) {
+        scanf("%d", &tracks[i]);
+    }
+
+    printf("Enter the initial head position: ");
+    scanf("%d", &head);
+
+    printf("\nSequence of track movements: %d", head);
+
+    for (i = 0; i < n; i++) {
+        int index = findClosestTrack(tracks, visited, head, n);
+        visited[index] = true;
+        avg_head_movement += abs_diff(head, tracks[index]);
+        printf(" -> %d", tracks[index]);
+        head = tracks[index];
+    }
+
+    avg_head_movement /= n;
+
+    printf("\n\nAverage head movement: %.2f\n", avg_head_movement);
+
+    return 0;
+}
