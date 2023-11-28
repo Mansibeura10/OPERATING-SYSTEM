@@ -1,0 +1,37 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int abs_diff(int a, int b) {
+    return abs(a - b);
+}
+
+int main() {
+    int tracks[20];
+    int n, head, i;
+    float avg_head_movement = 0;
+
+    printf("Enter the number of tracks: ");
+    scanf("%d", &n);
+
+    printf("Enter the track positions: ");
+    for (i = 0; i < n; i++) {
+        scanf("%d", &tracks[i]);
+    }
+
+    printf("Enter the initial head position: ");
+    scanf("%d", &head);
+
+    printf("\nSequence of track movements: %d", head);
+
+    for (i = 0; i < n; i++) {
+        avg_head_movement += abs_diff(head, tracks[i]);
+        printf(" -> %d", tracks[i]);
+        head = tracks[i];
+    }
+
+    avg_head_movement /= n;
+
+    printf("\n\nAverage head movement: %.2f\n", avg_head_movement);
+
+    return 0;
+}
